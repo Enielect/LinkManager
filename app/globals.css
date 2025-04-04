@@ -62,6 +62,14 @@ body {
   }
 }
 
+.signup-gradient {
+  background: linear-gradient(90deg,#501794 0%, #501794 30%, #3E70A1 100%);
+}
+
+.signup-img-shadow {
+  box-shadow: 0px -10px 40px 30px #310f5c
+}
+
 @layer base {
   * {
     @apply border-border;
