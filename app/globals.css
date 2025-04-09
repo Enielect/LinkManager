@@ -6,6 +6,10 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+html {
+  height: 100%;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -63,11 +67,24 @@ body {
 }
 
 .signup-gradient {
-  background: linear-gradient(90deg,#501794 0%, #501794 30%, #3E70A1 100%);
+  background: linear-gradient(90deg, #501794 0%, #501794 30%, #3e70a1 100%);
 }
 
 .signup-img-shadow {
-  box-shadow: 0px -10px 40px 30px #310f5c
+  box-shadow: 0px -10px 40px 30px #310f5c;
+  background: linear-gradient(#310f5c 0% 100%);
+}
+
+@media (min-width: 640px) {
+  .pseudo-blur::before {
+    content: '';
+    width: 100px;
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    height: 100%;
+    background-color: linear-gradient(90deg, #501794);
+  }
 }
 
 @layer base {
@@ -75,6 +92,30 @@ body {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-signup text-foreground;
+  }
+}
+
+.flame {
+  transition: transform 0.3s ease-in-out;
+}
+
+.burn {
+  animation: burnFlame 1s infinite ease-in-out;
+}
+
+@keyframes burnFlame {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.05) rotate(-1deg);
+  }
+  50% {
+    transform: scale(0.98) rotate(1.5deg);
+  }
+  75% {
+    transform: scale(1.03) rotate(-0.5deg);
   }
 }

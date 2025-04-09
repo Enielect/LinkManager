@@ -5,7 +5,5 @@ export default async function LinkMinder() {
   //   console.log(metadata)
   // );
 
-
-
   return <HomePage />;
 }
