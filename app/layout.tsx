@@ -4,6 +4,7 @@ import './globals.css';
 import SideNav from '@/components/molecules/SideNav';
 import Image from 'next/image';
 import { Toaster } from '@/components/ui/sonner';
+import LogOut from '@/components/ui/log-out';
 
 const winkySans = localFont({
   src: './fonts/Winky_Sans/WinkySans-VariableFont_wght.ttf',
@@ -34,7 +35,9 @@ export default function RootLayout({
           className='bg-repeat bg-center fixed h-[100dvh] w-full -z-50 inset-0'
           src='/shader-img.png'
         />
-        <SideNav />
+        <SideNav>
+          <LogOut />
+        </SideNav>
 
         {children}
         <Toaster

@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 
-const SideNav = () => {
+const SideNav = ({ children }: { children: ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
@@ -28,11 +28,12 @@ const SideNav = () => {
           }`}
         >
           <h2 className='text-xl pl-5 py-5'>Link Manager</h2>
-          <ul className=' divide-y divide-violet-400 border-y border-violet-400'>
+          <ul className='flex flex-col divide-y divide-violet-400 border-y h-[calc(100%-60px)] border-violet-400'>
             <li className='pl-5 py-2'>Today&apos;s Business</li>
             <li className='py-2 pl-5'>Read Links</li>
             <li className='py-2 pl-5'>notifications</li>
             <li className='py-2 pl-5'>about</li>
+            <li className='py-2 pl-5 mt-auto'>{children}</li>
           </ul>
         </nav>
       </div>
