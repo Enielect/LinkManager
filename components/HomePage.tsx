@@ -9,6 +9,7 @@ import { Button } from './ui/button';
 
 const categories = [
   'frontend',
+  'backend',
   'electronics',
   'calculus',
   'arduino',
@@ -27,7 +28,7 @@ const HomePage = () => {
       const rect = inputRef.current?.getBoundingClientRect() as DOMRect;
       console.log(rect);
       if (rect) {
-        setInputNearTop(rect.top == 56);
+        setInputNearTop(rect.top <= 56);
       }
     };
 
@@ -44,21 +45,30 @@ const HomePage = () => {
     <div className=''>
       <header className='fixed z-10 bg-signup top-0 left-0 w-full h-auto signunp-img-shadow p-3 text-white flex justify-between items-center mb-8'>
         <h1 className='text-3xl font-bold'>LinkMinder</h1>
+        <nav className='max-sm:hidden  gap-3'>
+          <ul className='flex md:text-lg'>
+            <li className='pl-5 py-2'>Today&apos;s Business</li>
+            <li className='py-2 pl-5'>Read Links</li>
+            <li className='py-2 pl-5'>notifications</li>
+            <li className='py-2 pl-5'>about</li>
+            <li className='py-2 pl-5'>logout</li>
+          </ul>
+        </nav>
         <Avatar>
           <AvatarImage src='/placeholder.svg?height=32&width=32' alt='User' />
-          <AvatarFallback>U</AvatarFallback>
+          <AvatarFallback className='bg-[#501794]'>U</AvatarFallback>
         </Avatar>
       </header>
-      <div className='px-3 relative top-[6rem]'>
+      <div className=' relative top-[6rem]'>
         <div
           ref={inputRef}
-          className={`flex w-full  gap-2 py-4 sticky top-[4rem] ${
-            inputNearTop ? 'bg-[#310f5c]' : 'bg-transparent'
+          className={`flex w-full  max-w-[40rem] transition-all mx-auto gap-2 py-4 sticky  z-10 top-[4rem] ${
+            inputNearTop ? 'bg-[#310f5c] max-w-full' : 'bg-transparent'
           }`}
         >
           <Input
-            type='url'
-            className='text-white'
+            type='search'
+            className='text-white ml-3'
             placeholder='https://example.com/article'
             value={newLink}
             onChange={(e) => {
@@ -91,8 +101,12 @@ const HomePage = () => {
           ))}
         </section>
         <FilterTab />
-        <div className='py-4'>
-          <LinkCard />
+        <div className='py-4 max-sm:space-y-5 px-3 sm:flex gap-10 flex-wrap justify-center'>
+          {Array(20)
+            .fill(null)
+            .map((link, i) => (
+              <LinkCard key={i} />
+            ))}
         </div>
       </div>
     </div>

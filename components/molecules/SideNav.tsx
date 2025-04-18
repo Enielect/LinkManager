@@ -9,7 +9,7 @@ const SideNav = ({ children }: { children: ReactNode }) => {
     <>
       <button
         onClick={() => setIsOpen((c) => !c)}
-        className='fixed top-1/2 -translate-x-1/2 left-0 w-7 h-7 bg-violet-600 rounded-full z-20'
+        className='fixed top-1/2 -translate-x-1/2 sm:hidden left-0 w-7 h-7 bg-violet-600 rounded-full z-20'
       >
         <ChevronRight className='translate-x-1 text-white' />
       </button>
@@ -23,7 +23,7 @@ const SideNav = ({ children }: { children: ReactNode }) => {
         }}
       >
         <nav
-          className={`bg-[#310f5c] text-white fixed w-[70%] h-[100dvh] transform transition-transform ease-in-out duration-1000 inset-0 z-50 ${
+          className={`bg-[#310f5c] text-white fixed w-[70%] h-[100dvh] transform transition-all  ease-in-out inset-0 z-50 ${
             isOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
         >
