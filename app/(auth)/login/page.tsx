@@ -3,27 +3,56 @@
 import { login, signup } from './actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { AuthError, Session, User } from '@supabase/supabase-js';
 import { Loader2, LockKeyhole } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useActionState, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
+export type AuthResponse =
+  | {
+      data: {
+        user: User | null;
+        session: Session | null;
+      };
+      error: null;
+    }
+  | {
+      data: {
+        user: null;
+        session: null;
+      };
+      error: AuthError;
+    };
+
 const SignUpPage = () => {
+  const router = useRouter();
   const [signUp, setSignUp] = useState(false);
-  //eslint-disable-next-line
   const [signupData, signUpDispatch, signUpPending] = useActionState(
     signup,
     null
   );
-  //eslint-disable-next-line
-  const [__, loginDispatch, loginPending] = useActionState(login, null);
+  const [signinData, loginDispatch, loginPending] = useActionState(login, null);
 
   useEffect(() => {
-    if (signupData) {
+    if (signupData?.error) {
+      toast(signupData?.error?.message);
+    }
+    if (signupData?.data) {
       toast('Check your email to verify your account');
     }
-  }, [signupData]);
+
+    if (signinData) {
+      toast(signinData);
+      if (signinData === 'You have signed in successfully') {
+        router.push('/');
+      }
+    }
+
+    //eslint-disable-next-line
+  }, [signupData, signinData]);
 
   return (
     <div className=' text-white flex flex-col sm:flex-row'>

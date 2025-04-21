@@ -17,9 +17,12 @@ export async function GET(request: NextRequest) {
       type,
       token_hash,
     });
+    console.log(error, 'error while confirming email ');
     if (!error) {
       // redirect user to specified redirect URL or root of app
       redirect(next);
+    } else {
+      redirect('/auth/error?error=invalid_or_expired');
     }
   }
 

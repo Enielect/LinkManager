@@ -1,7 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
+// import { redirect } from 'next/navigation';
 
 import { createClient } from '@/lib/supabase/server';
 
@@ -12,19 +12,25 @@ export async function login(prev: unknown, formData: FormData) {
   // in practice, you should validate your inputs
 
   //you should be using zod here for input validation
-  const data = {
-    email: formData.get('email') as string,
-    password: formData.get('password') as string,
-  };
+  try {
+    const data = {
+      email: formData.get('email') as string,
+      password: formData.get('password') as string,
+    };
 
-  const { error } = await supabase.auth.signInWithPassword(data);
+    const returnedData = await supabase.auth.signInWithPassword(data);
+    const errorState = returnedData.error;
+    console.log(errorState?.message);
 
-  if (error) {
-    redirect('/error');
+    if (errorState) {
+      return errorState.message;
+    }
+
+    revalidatePath('/', 'layout');
+    return 'You have signed in successfully';
+  } catch (err: unknown) {
+    return err instanceof Error ? err.message : 'Invalid credentials';
   }
-
-  revalidatePath('/', 'layout');
-  redirect('/');
 }
 
 export async function signup(prev: unknown, formData: FormData) {
@@ -37,19 +43,11 @@ export async function signup(prev: unknown, formData: FormData) {
     password: formData.get('password') as string,
   };
 
-  const { data: signupData, error } = await supabase.auth.signUp(data);
-  // console.log(signupData, 'signupdata');
-  // const {
-  //   data: { user },
-  // } = await supabase.auth.getUser();
-  // console.log(user, 'user');
-  console.log(error, 'error');
+  const signUpInfo = await supabase.auth.signUp(data);
 
-  if (error) {
-    redirect('/error');
-  }
+  console.log(signUpInfo.error, 'error');
 
   revalidatePath('/', 'layout');
-  return signupData;
+  return signUpInfo;
   // redirect('/');
 }
